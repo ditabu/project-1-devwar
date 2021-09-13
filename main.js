@@ -4,7 +4,7 @@ const playerDeck = document.getElementById('#playerStack');
 const deckRef = {
     ace: {
         imagesURL: ['images/clubs/clubs-A.svg', 'images/diamonds/diamonds-A.svg', 'images/hearts/hearts-A.svg', 'images/spades/spades-A.svg'],
-        beats: ['clubsKing', 'clubsQueen', 'clubsJack', 'clubs10', 'clubs9', 'clubs8', 'clubs7', 'clubs6', 'clubs5', 'clubs4', 'clubs3', 'clubs2', 'diamondsKing', 'diamondsQueen', 'diamondsJack', 'diamonds10', 'diamonds9', 'diamonds8', 'diamonds7', 'diamonds6', 'diamonds5', 'diamonds4', 'diamonds3', 'diamonds2', 'heartsKing', 'heartsQueen', 'heartsJack', 'hearts10', 'hearts9', 'hearts8', 'hearts7', 'hearts6', 'hearts5', 'hearts4', 'hearts3', 'hearts2', 'spadesKing', 'spadesQueen', 'spadesJack', 'spades10', 'spades9', 'spades8', 'spades7', 'spades6', 'spades5', 'spades4', 'spades3', 'spades2']
+        lowerVal: ['clubsKing', 'clubsQueen', 'clubsJack', 'clubs10', 'clubs9', 'clubs8', 'clubs7', 'clubs6', 'clubs5', 'clubs4', 'clubs3', 'clubs2', 'diamondsKing', 'diamondsQueen', 'diamondsJack', 'diamonds10', 'diamonds9', 'diamonds8', 'diamonds7', 'diamonds6', 'diamonds5', 'diamonds4', 'diamonds3', 'diamonds2', 'heartsKing', 'heartsQueen', 'heartsJack', 'hearts10', 'hearts9', 'hearts8', 'hearts7', 'hearts6', 'hearts5', 'hearts4', 'hearts3', 'hearts2', 'spadesKing', 'spadesQueen', 'spadesJack', 'spades10', 'spades9', 'spades8', 'spades7', 'spades6', 'spades5', 'spades4', 'spades3', 'spades2']
     },
     king: { 
         imagesURL: ['images/clubs/clubs-K.svg', 'images/diamonds/diamonds-K.svg', 'images/hearts/hearts-K.svg', 'images/spades/spades-K.svg'],
@@ -55,14 +55,21 @@ const deckRef = {
     },
 }
 console.log(deckRef);
+
 /*----- app's state (variables) -----*/
 
+let splitDeck;
 let cardsWon;
 let faceCards;
 let winner;
 let war;
 
 /*----- cached element references -----*/
+const splitDeckEls = {
+    dealer: document.querySelector('#dealerStack > img'),
+    player: document.querySelector('#playerStack > img')
+
+}
 const cardsWonEls = {
     dealer: document.querySelector('#dealerWon'),
     player: document.querySelector('#playerWon')
@@ -83,6 +90,7 @@ document.querySelector('button')
 
 document.querySelector('#playerStack')   
     .addEventListener('click', displayCard);
+
     
 /*----- functions -----*/
 init()

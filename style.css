@@ -10,22 +10,38 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: fantasy;
     background-color: seagreen;
 }
-
-
+h1 {
+    font-size: 50px;
+    text-align: center;
+    font-family: fantasy;
+}
 
 main {
 
 }
 
 #dealerStack, #playerStack {
-    padding: 10px;
+    padding: 40px;
+    width: 5em;
+    height: 7em;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-image: radial-gradient(#FFFFFF 10%, #0e266a 10%);
+    background-position: 0 0;
+    background-size: 30px 30px;
+    background-repeat: repeat;
 }
 
 #dealerFaceCard, #playerFaceCard {
     padding: 10px;
+    width: 5em;
+    height: 7em;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: #ebedf1;
 }
 
 button {
@@ -35,6 +51,7 @@ button {
     border: black solid;
     border-radius: 4px;
     font-size: 18px;
+    font-family: fantasy;
 }
 
   
