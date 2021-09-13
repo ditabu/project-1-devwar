@@ -1,8 +1,7 @@
 /*----- constants -----*/
+const dealerDeck = document.getElementById('#dealerStack');
+const playerDeck = document.getElementById('#playerStack');
 const deckRef = {
-    deck: {
-        imagesUrl: 'images/back/red.svg'
-    },
     ace: {
         imagesURL: ['images/clubs/clubs-A.svg', 'images/diamonds/diamonds-A.svg', 'images/hearts/hearts-A.svg', 'images/spades/spades-A.svg'],
         beats: ['clubsKing', 'clubsQueen', 'clubsJack', 'clubs10', 'clubs9', 'clubs8', 'clubs7', 'clubs6', 'clubs5', 'clubs4', 'clubs3', 'clubs2', 'diamondsKing', 'diamondsQueen', 'diamondsJack', 'diamonds10', 'diamonds9', 'diamonds8', 'diamonds7', 'diamonds6', 'diamonds5', 'diamonds4', 'diamonds3', 'diamonds2', 'heartsKing', 'heartsQueen', 'heartsJack', 'hearts10', 'hearts9', 'hearts8', 'hearts7', 'hearts6', 'hearts5', 'hearts4', 'hearts3', 'hearts2', 'spadesKing', 'spadesQueen', 'spadesJack', 'spades10', 'spades9', 'spades8', 'spades7', 'spades6', 'spades5', 'spades4', 'spades3', 'spades2']
@@ -81,6 +80,10 @@ const faceCardEls = {
 /*----- event listeners -----*/
 document.querySelector('button')
     .addEventListener('click', dealCards);
+
+document.querySelector('#playerStack')   
+    .addEventListener('click', displayCard);
+    
 /*----- functions -----*/
 init()
 
@@ -96,6 +99,7 @@ function init(){
     }
 
     winner = null;
+    war = null;
 
     render()
 }
@@ -116,17 +120,26 @@ function render(){
 
 function dealCards(){
     console.log('Draw Card'); 
-}  
+} 
+
+function displayCard(){
+    console.log('Card Drawn');
+}
+
+// if (dealer > player) {
+
+// }else if (player > dealer)
 
 
 
 
 
 
-
-    // faceCards.dealer = getRandomCard();
-    // faceCards.player = getRandomCard();
-    //     const randomIdx = Math.floor(Math.random() * 26)
+// faceCards.dealer = getRandomCard();
+// faceCards.player = getRandomCard();
+    
+// const randomIdx = Math.floor(Math.random() * 26);
+//     return choice[randomIdx]
 
   
 
