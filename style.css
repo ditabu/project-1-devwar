@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+  }
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: seagreen;
+}
+
+
+
+main {
+
+}
+
+#dealerStack, #playerStack {
+    padding: 10px;
+}
+
+#dealerFaceCard, #playerFaceCard {
+    padding: 10px;
+}
+
+button {
+    grid-column: span 2;
+    background-color: rgb(39, 38, 38);
+    color: whitesmoke;
+    border: black solid;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+  
