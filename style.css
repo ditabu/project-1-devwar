@@ -11,7 +11,8 @@ body {
     align-items: center;
     flex: 0 1 40%;
     font-family: fantasy;
-    background-color: seagreen;
+    color: silver;
+    background-color: rgb(38, 35, 35);
 }
 
 h1 {
