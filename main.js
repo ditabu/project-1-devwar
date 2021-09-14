@@ -1,15 +1,16 @@
 /*----- constants -----*/
-
+const dealer = document.querySelector('DEALER');
+const player = document.querySelector('PLAYER');
 // Grab all the documents by all the Ids I'll need 
 
 // Then, change the source of images to hard code in 1 card. Taking out image card in the div. Change background image in css
 
-const deckRef = {
-    suits: ['clubs', 'diamonds', 'hearts', 'spades'],
-    faceVal: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-}
+// const deckRef = {
+//     suits: ['clubs', 'diamonds', 'hearts', 'spades'],
+//     faceVal: ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+// }
 
-console.log(deckRef);
+// console.log(deckRef);
 
 const deckImages = {
     ace: {
@@ -57,6 +58,7 @@ console.log(deckImages);
 
 /*----- app's state (variables) -----*/
 
+let deck = []
 let deal; // button will hide when clicked
 let splitDeck; //  deck split into 26 cards for dealer and player
 let cardsWon; // will change every time player or dealer wins war
@@ -67,15 +69,17 @@ let dealAgain; // to replay game
 
 
 /*----- cached element references -----*/
-const dealer = document.querySelector('DEALER');
-const player = document.querySelector('PLAYER');
 const dealerDeckEls = {
     dealer: document.querySelector('#dealerStack'),
     player: document.querySelector('#playerStack')
 }
 const faceCardEls = {
-    dealer: document.querySelector('#dealerFaceCard'),
-    player: document.querySelector('#playerFaceCard')
+    dealer: {
+        imagesEl: document.querySelector('#dealerFaceCard > img')
+    },    
+    player:  {
+        imagesEl: document.querySelector('#playerFaceCard > img')
+    }    
 }
 const cardsWonEls = {
     dealer: document.querySelector('#dealerWon'),
@@ -90,29 +94,69 @@ const splitDeckEls = {
 document.querySelector('button')
     .addEventListener('click', dealCards);
 
+document.querySelector('#playerStack')
+    .addEventListener('click', displayCard);
+
+
 /*----- functions -----*/
+init()
 
-// function init(){
-//     // splitDeck = {
-//     //     dealer: 
-//     // }
-
-//     render()
-// }
-// function render(){
-
-    function dealCards(){
-        console.log('Draw Cards');
+function init(){
+    cardsWon = {
+        dealer: 0,
+        player: 0,
     }
-// }
+
+    faceCards = {
+        dealer: '2, clubs',
+        player: '2, clubs'
+    }
+
+    winner = null;
+    war = null;
+
+    render()
+}
+function render(){
+
+// create a new deck of cards array - https://w3collective.com/random-playing-card-javascript/
+function createNewDeck(){
+    faceVal = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+    const cardDeck = [];
+        for(let a = 0; a < suits.length; a++) {
+            for(let f = 0; f < faceVal.length; f++) {
+                const value = faceVal[f];
+                const suit = suits[a];
+                cardDeck.push({ value, suit });
+            }
+        }
+    return cardDeck;
+}
+console.log(createNewDeck());
+
+
+    // Cards won score changes as winner collects winning cards
+    for(let cardWon in cardsWon){
+        console.log(cardWon, '< key name');
+    cardsWonEls[cardWon].textContent = cardsWon[cardWon];
+    }
+
+    for(let faceCard in faceCards){
+        console.log(faceCard, '2, clubs');
+        faceCardEls[faceCard].imagesEl.src = deckImages[faceCards[faceCard]].imagesURL
+    }
+}
 // Player clicks on Deal button to start game  and deal cards
 // Then, deal button needs to disappear from screen
-
+function dealCards(){
+    console.log('Draw Cards');
+}
 //  When player clicks on top of their card <div><img>Dealer’s card played displays, get random card
 
-// Cards won score changes as winner collects winning cards
-
-
+function displayCard(){
+    console.log('Card Drawn');
+}
 // If player draws a higher value, then player gets both cards - Highest to lowest values (A, K, Q, J, 10, 9, 8, 7, 6, 5, 4, 3, 2)
 // If player draws a lower value, then dealer gets both cards
 // If player draws a card of the same value as dealer, then a war is declared. 
@@ -124,6 +168,25 @@ document.querySelector('button')
 // If player draws a card of the same value as dealer, then a war is declared.
 // If war happens again, repeat steps above
 // Winner of the war, gets all cards
+
+faceCards.dealer = dealRandomCard();
+faceCards.player = dealRandomCard();
+
+    if (cardsWon.dealer === cardsWon.player){
+        winner = 'war';
+    } else if(cardsWon.player)
+
+
+    render()
+
+function dealRandomCard(){
+}
+const cardDeck = createNewDeck();
+dealRandomCard(cardDeck)
+    const randomIdx = Math.floor(Math.random() * 51);
+      
+
+
 // Game will need to loop until winner gets all 52 cards
 // When games ends, display winner
 // <button>DEAL AGAIN
