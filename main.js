@@ -2,6 +2,56 @@
 const dealer = document.querySelector('DEALER');
 const player = document.querySelector('PLAYER');
 
+<<<<<<< HEAD
+=======
+const dealer = document.querySelector('DEALER');
+const player = document.querySelector('PLAYER');
+
+
+const deckImages = {
+    ace: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-A.svg', 'card-deck-css/images/diamonds/diamonds-A.svg', 'card-deck-css/images/hearts/hearts-A.svg', 'card-deck-css/images/spades/spades-A.svg'],   
+    },
+    king: { 
+        imagesUrl: ['card-deck-css/images/clubs/clubs-K.svg', 'card-deck-css/images/diamonds/diamonds-K.svg', 'card-deck-css/images/hearts/hearts-K.svg', 'card-deck-css/images/spades/spades-K.svg'],
+    },
+    queen: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-Q.svg', 'card-deck-css/images/diamonds/diamonds-Q.svg', 'card-deck-css/images/hearts/hearts-Q.svg', 'card-deck-css/images/spades/spades-Q.svg'],
+    },
+    jack: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-J.svg', 'card-deck-css/images/diamonds/diamonds-J.svg', 'card-deck-css/images/hearts/hearts-J.svg', 'card-deck-css/images/spades/spades-J.svg'],     
+    },
+    ten: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r10.svg', 'card-deck-css/images/diamonds/diamonds-r10.svg', 'card-deck-css/images/hearts/hearts-r10.svg', 'card-deck-css/images/spades/spades-r10.svg'],
+    },
+    nine: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r09.svg', 'card-deck-css/images/diamonds/diamonds-r09.svg', 'card-deck-css/images/hearts/hearts-r09.svg', 'card-deck-css/images/spades/spades-r09.svg'],
+    },
+    eight: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r08.svg', 'card-deck-css/images/diamonds/diamonds-r08.svg', 'card-deck-css/images/hearts/hearts-r08.svg', 'card-deck-css/images/spades/spades-r08.svg'],
+    },
+    seven: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r07.svg', 'card-deck-css/images/diamonds/diamonds-r07.svg', 'card-deck-css/images/hearts/hearts-r07.svg', 'card-deck-css/images/spades/spades-r07.svg'],
+    },
+    six: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r06.svg', 'card-deck-css/images/diamonds/diamonds-r06.svg', 'card-deck-css/images/hearts/hearts-r06.svg', 'card-deck-css/images/spades/spades-r06.svg'],
+    },
+    five: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r05.svg', 'card-deck-css/images/diamonds/diamonds-r05.svg', 'card-deck-css/images/hearts/hearts-r05.svg', 'card-deck-css/images/spades/spades-r05.svg']
+    },
+    four: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r04.svg', 'card-deck-css/images/diamonds/diamonds-r04.svg', 'card-deck-css/images/hearts/hearts-r04.svg', 'card-deck-css/images/spades/spades-r04.svg'],
+    },
+    three: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r03.svg', 'card-deck-css/images/diamonds/diamonds-r03.svg', 'card-deck-css/images/hearts/hearts-r03.svg', 'card-deck-css/images/spades/spades-r03.svg'],
+    },
+    two: {
+        imagesUrl: ['card-deck-css/images/clubs/clubs-r02.svg', 'card-deck-css/images/diamonds/diamonds-r02.svg', 'card-deck-css/images/hearts/hearts-r02.svg', 'card-deck-css/images/spades/spades-r02.svg']
+    },
+}
+console.log(deckImages);
+
+>>>>>>> cecca3cd3fdac91eb3cc52503d6ff77cba1b4a47
 /*----- app's state (variables) -----*/
 
 let deck = []
@@ -56,6 +106,7 @@ function createNewDeck(){
         return deck;
 }
 
+
 function shuffle(){
     for(let i = deck.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * i);
@@ -63,7 +114,37 @@ function shuffle(){
         deck[i] = deck[j];
         deck[j] = temp;
     }
+
+console.log(cardDeck);
+
+function deal2players(){
+    // create 2 arrays, 1 for computer and 1 for player
+    // global scope vs local scope
+    const deck1 = getDeck();
+    const deck2 = getDeck()
 }
+function displayRandomCard(){
+    // // const cardDeck = createNewDeck();
+    // // dealRandomCard(cardDeck)
+    // // <div><img>Dealer’s “stack” of cards - random 26 cards each
+        const randomDIdx = Math.floor(Math.random() * 13 +2);
+        return randomDIdx;
+        // <div><img>Player’s “stack” of cards - random 26 cards each   
+        const randomPIdx = Math.floor(Math.random() * 13 +2);
+};
+
+function dealCards(){
+    console.log('Draw Cards');
+    // createNewDeck();
+    // console.log(deck)
+}
+
+// //  When player clicks on top of their card <div><img>Dealer’s card played displays, get random card
+function displayCard(){
+    console.log('Card Drawn');
+
+}
+
 
 
 
@@ -139,6 +220,7 @@ function splitDeck(){
 function displayCard(){
     console.log('Card Drawn');
 }
+
 
 
 
