@@ -2,62 +2,11 @@
 const dealer = document.querySelector('DEALER');
 const player = document.querySelector('PLAYER');
 
-
-const deckImages = {
-    ace: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-A.svg', 'card-deck-css/images/diamonds/diamonds-A.svg', 'card-deck-css/images/hearts/hearts-A.svg', 'card-deck-css/images/spades/spades-A.svg'],   
-    },
-    king: { 
-        imagesUrl: ['card-deck-css/images/clubs/clubs-K.svg', 'card-deck-css/images/diamonds/diamonds-K.svg', 'card-deck-css/images/hearts/hearts-K.svg', 'card-deck-css/images/spades/spades-K.svg'],
-    },
-    queen: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-Q.svg', 'card-deck-css/images/diamonds/diamonds-Q.svg', 'card-deck-css/images/hearts/hearts-Q.svg', 'card-deck-css/images/spades/spades-Q.svg'],
-    },
-    jack: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-J.svg', 'card-deck-css/images/diamonds/diamonds-J.svg', 'card-deck-css/images/hearts/hearts-J.svg', 'card-deck-css/images/spades/spades-J.svg'],     
-    },
-    ten: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r10.svg', 'card-deck-css/images/diamonds/diamonds-r10.svg', 'card-deck-css/images/hearts/hearts-r10.svg', 'card-deck-css/images/spades/spades-r10.svg'],
-    },
-    nine: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r09.svg', 'card-deck-css/images/diamonds/diamonds-r09.svg', 'card-deck-css/images/hearts/hearts-r09.svg', 'card-deck-css/images/spades/spades-r09.svg'],
-    },
-    eight: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r08.svg', 'card-deck-css/images/diamonds/diamonds-r08.svg', 'card-deck-css/images/hearts/hearts-r08.svg', 'card-deck-css/images/spades/spades-r08.svg'],
-    },
-    seven: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r07.svg', 'card-deck-css/images/diamonds/diamonds-r07.svg', 'card-deck-css/images/hearts/hearts-r07.svg', 'card-deck-css/images/spades/spades-r07.svg'],
-    },
-    six: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r06.svg', 'card-deck-css/images/diamonds/diamonds-r06.svg', 'card-deck-css/images/hearts/hearts-r06.svg', 'card-deck-css/images/spades/spades-r06.svg'],
-    },
-    five: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r05.svg', 'card-deck-css/images/diamonds/diamonds-r05.svg', 'card-deck-css/images/hearts/hearts-r05.svg', 'card-deck-css/images/spades/spades-r05.svg']
-    },
-    four: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r04.svg', 'card-deck-css/images/diamonds/diamonds-r04.svg', 'card-deck-css/images/hearts/hearts-r04.svg', 'card-deck-css/images/spades/spades-r04.svg'],
-    },
-    three: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r03.svg', 'card-deck-css/images/diamonds/diamonds-r03.svg', 'card-deck-css/images/hearts/hearts-r03.svg', 'card-deck-css/images/spades/spades-r03.svg'],
-    },
-    two: {
-        imagesUrl: ['card-deck-css/images/clubs/clubs-r02.svg', 'card-deck-css/images/diamonds/diamonds-r02.svg', 'card-deck-css/images/hearts/hearts-r02.svg', 'card-deck-css/images/spades/spades-r02.svg']
-    },
-}
-console.log(deckImages);
-
-
 /*----- app's state (variables) -----*/
 
 let deck = []
-let deal; // button will hide when clicked
-let splitDeck; //  deck split into 26 cards for dealer and player
-let cardsWon; // will change every time player or dealer wins war
-let faceCards; // will change when you click on top of stacked card deck
-let winner; // = null until end of game
-let war; // null until war is declared
-let dealAgain; // to replay game
-
+let playerhand = []
+let dealerhand = []
 
 /*----- cached element references -----*/
 const dealerDeckEls = {
@@ -92,7 +41,7 @@ document.querySelector('#playerStack')
 /*----- functions -----*/
 function createNewDeck(){
     faceVal = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+    suits = ['♣', '♦', '♥', '♠'];
         for(let a = 0; a < suits.length; a++) {
             for(let f = 0; f < faceVal.length; f++) {
                 const value = faceVal[f];
@@ -102,11 +51,17 @@ function createNewDeck(){
         }
         return deck;
 }
-// console.log(cardDeck)
-function deal2players(){
-    // create 2 arrays, 1 for computer and 1 for player
-    // global scope vs local scope
+
+function shuffle(){
+    for(let i = deck.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        let temp = deck[i];
+        deck[i] = deck[j];
+        deck[j] = temp;
+    }
 }
+
+
 
 function displayRandomCard(){
     // // const cardDeck = createNewDeck();
@@ -116,30 +71,29 @@ function displayRandomCard(){
         return randomDIdx;
         // <div><img>Player’s “stack” of cards - random 26 cards each   
         const randomPIdx = Math.floor(Math.random() * 13 +2);
-    };
+}
 
-// Player clicks on Deal button to start game  and deal cards
-// // Then, deal button needs to disappear from screen
 function dealCards(){
     console.log('Draw Cards');
-    createNewDeck();
-    console.log(deck)
+    deck = createNewDeck();
+    shuffle();
+    splitDeck();
+    // split deck variable in half and give one stack to dealer and one to player
+
+    // console.log(deck)
+}
+
+function splitDeck(){
+    for(let i = deck.length - 1; i >= deck.length/2; --i) {
+        temp.add(deck.get(i));
+        deck.remove(i);
+    } 
+    return newDeck;
 }
 // //  When player clicks on top of their card <div><img>Dealer’s card played displays, get random card
 function displayCard(){
     console.log('Card Drawn');
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -195,9 +149,9 @@ function init(){
 // faceCards.dealer = dealRandomCard();
 // faceCards.player = dealRandomCard();
 
-//     if (cardsWon.dealer === cardsWon.player){
-//         winner = 'war';
-//     } else if(cardsWon.player )
+    // if (cardsWon.dealer === cardsWon.player){
+    //     winner = 'war';
+    // } else if(cardsWon.player )
 
 
 
