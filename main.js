@@ -2,6 +2,9 @@
 const dealer = document.querySelector('DEALER');
 const player = document.querySelector('PLAYER');
 
+const dealer = document.querySelector('DEALER');
+const player = document.querySelector('PLAYER');
+
 
 const deckImages = {
     ace: {
@@ -45,7 +48,6 @@ const deckImages = {
     },
 }
 console.log(deckImages);
-
 
 /*----- app's state (variables) -----*/
 
@@ -92,7 +94,7 @@ document.querySelector('#playerStack')
 /*----- functions -----*/
 function createNewDeck(){
     faceVal = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+    suits = ['♣', '♦', '♥', '♠'];
         for(let a = 0; a < suits.length; a++) {
             for(let f = 0; f < faceVal.length; f++) {
                 const value = faceVal[f];
@@ -102,12 +104,14 @@ function createNewDeck(){
         }
         return deck;
 }
-// console.log(cardDeck)
+console.log(cardDeck);
+
 function deal2players(){
     // create 2 arrays, 1 for computer and 1 for player
     // global scope vs local scope
+    const deck1 = getDeck();
+    const deck2 = getDeck()
 }
-
 function displayRandomCard(){
     // // const cardDeck = createNewDeck();
     // // dealRandomCard(cardDeck)
@@ -116,30 +120,18 @@ function displayRandomCard(){
         return randomDIdx;
         // <div><img>Player’s “stack” of cards - random 26 cards each   
         const randomPIdx = Math.floor(Math.random() * 13 +2);
-    };
+};
 
-// Player clicks on Deal button to start game  and deal cards
-// // Then, deal button needs to disappear from screen
 function dealCards(){
     console.log('Draw Cards');
-    createNewDeck();
-    console.log(deck)
+    // createNewDeck();
+    // console.log(deck)
 }
+
 // //  When player clicks on top of their card <div><img>Dealer’s card played displays, get random card
 function displayCard(){
     console.log('Card Drawn');
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -195,9 +187,9 @@ function init(){
 // faceCards.dealer = dealRandomCard();
 // faceCards.player = dealRandomCard();
 
-//     if (cardsWon.dealer === cardsWon.player){
-//         winner = 'war';
-//     } else if(cardsWon.player )
+    // if (cardsWon.dealer === cardsWon.player){
+    //     winner = 'war';
+    // } else if(cardsWon.player )
 
 
 
