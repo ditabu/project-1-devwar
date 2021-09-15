@@ -5,8 +5,12 @@ const player = document.querySelector('PLAYER');
 /*----- app's state (variables) -----*/
 
 let deck = []
-let playerhand = []
-let dealerhand = []
+let playerHand = []
+let dealerHand = []
+let discardPlayer = []
+let discardDealer = []
+let playerCard;
+let dealerCard;
 
 /*----- cached element references -----*/
 const dealerDeckEls = {
@@ -32,10 +36,10 @@ const splitDeckEls = {
 
 /*----- event listeners -----*/
 document.querySelector('button')
-.addEventListener('click', dealCards);
+.addEventListener('click', dealCards); 
 
 document.querySelector('#playerStack')
-.addEventListener('click', displayRandomCard);
+.addEventListener('click', compareCards);
 
 
 /*----- functions -----*/
@@ -64,32 +68,73 @@ function shuffle(){
 
 
 function displayRandomCard(){
-    // // const cardDeck = createNewDeck();
+
+
+    // card you display is going to be equal to the first card in the array
+    playerCard = playerHand[0]
+    dealerCard = dealerHand[0]
+    console.log(playerCard, dealerCard, "these are my cards")
+    const dealerFaceCard = document.getElementById('dealerFaceCard')
+    dealerFaceCard.innerHTML = `${dealerCard.value}${dealerCard.suit}`
+    const playerFaceCard = document.getElementById('playerFaceCard')
+    playerFaceCard.innerHTML = `${playerCard.value}${playerCard.suit}`
     // // dealRandomCard(cardDeck)
     // // <div><img>Dealer’s “stack” of cards - random 26 cards each
-        const randomDIdx = Math.floor(Math.random() * 13 +2);
-        return randomDIdx;
-        // <div><img>Player’s “stack” of cards - random 26 cards each   
-        const randomPIdx = Math.floor(Math.random() * 13 +2);
+        // const randomDIdx = Math.floor(Math.random() * 13 +2);
+        // return randomDIdx;
+        // // <div><img>Player’s “stack” of cards - random 26 cards each   
+        // const randomPIdx = Math.floor(Math.random() * 13 +2);
 }
+
+function compareCards(){
+    console.log(playerCard, dealerCard, 'compare card function')
+    if(playerCard.value > dealerCard.value) {
+        discardPlayer.push(dealerCard);
+        discardPlayer.push(playerCard);
+        dealerHand.shift();
+        playerHand.shift();
+        console.log('pc higher dc', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
+    }else if(playerCard.value < dealerCard.value) {
+        discardDealer.push(playerCard);
+        discardDealer.push(dealerCard);
+        playerHand.shift();
+        dealerHand.shift();
+        console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
+    }else if(playerCard.value === dealerCard.value){
+        discardDealer.push(dealerCard);
+        discardPlayer.push(playerCard);
+        dealerHand.shift();
+        playerHand.shift();
+        console.log('pc equals dc', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
+    }
+}
+console.log(dealerHand, playerHand);
 
 function dealCards(){
     console.log('Draw Cards');
     deck = createNewDeck();
     shuffle();
     splitDeck();
+    displayRandomCard();
+    
+    
     // split deck variable in half and give one stack to dealer and one to player
 
     // console.log(deck)
 }
 
 function splitDeck(){
-    for(let i = deck.length - 1; i >= deck.length/2; --i) {
-        temp.add(deck.get(i));
-        deck.remove(i);
-    } 
-    return newDeck;
+    for(let i = 0; i < deck.length; i++) {
+       if(i % 2 ===0){
+            playerHand.push(deck[i])
+        } else {
+            dealerHand.push(deck[i])
+        }
+    }
+    console.log(playerHand, dealerHand, 'these are my hands')
 }
+
+
 // //  When player clicks on top of their card <div><img>Dealer’s card played displays, get random card
 function displayCard(){
     console.log('Card Drawn');
@@ -104,12 +149,16 @@ function init(){
     }
     
     faceCards = {
-        dealer: 'four',
-        player: 'five'
+        dealer: 0,
+        player: 0,
     }
     
     winner = null;
     war = null;
+
+    playerHand = [];
+    dealerHand = [];
+
     
     
     // Cards won score changes as winner collects winning cards
