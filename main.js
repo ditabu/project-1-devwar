@@ -41,6 +41,11 @@ document.querySelector('button')
 document.querySelector('#playerStack')
 .addEventListener('click', compareCards);
 
+document.querySelector('#playerStack')
+.addEventListener('click', displayRandomCard);
+
+document.querySelector('#playerStack')
+.addEventListener('click', gameOver);
 
 /*----- functions -----*/
 function createNewDeck(){
@@ -129,8 +134,8 @@ function compareCards(){
 }
 console.log(dealerHand, playerHand)
 
-function declareWar(){
-    console.log(playerCard, dealerCard, 'compare card function')
+function declareWarWin(){
+    console.log(playerCard, dealerCard, 'compare war win')
     if(playerCard.value > dealerCard.value) {
         discardPlayer.push(dealerCard);
         discardPlayer.push(playerCard);
@@ -157,6 +162,14 @@ function declareWar(){
 
 }
 
+function gameOver(){
+    if(playerHand === 0) {
+        winner = 'dealer'
+    }else if(dealerHand === 0) {
+        looser = 'player'
+    }
+}
+
 function init(){
     cardsWon = {
         dealer: 0,
@@ -169,6 +182,7 @@ function init(){
     }
     
     winner = null;
+    looser = null;
     war = null;
 
     playerHand = [];
