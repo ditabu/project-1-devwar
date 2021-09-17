@@ -2,8 +2,7 @@
 
 Take a chance at battle against the Dealer in this simple renaissance themed card game called **DEV WAR**. It’s all about chance and being the first to win all 52 cards. 
 
-[DiAnne's Proj-1-DEV WAR GAME]
-(https://ditabu.github.io/project-1-devwar)
+[DiAnne's Proj-1-DEV WAR GAME](https://ditabu.github.io/project-1-devwar)
 
 **To Play**
 1. Click on the DEAL button to start the game
