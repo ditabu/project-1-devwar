@@ -1,8 +1,5 @@
-/*----- constants -----*/
 const dealer = document.querySelector('DEALER');
 const player = document.querySelector('PLAYER');
-
-/*----- app's state (variables) -----*/
 
 let deck = []
 let playerHand = []
@@ -15,40 +12,26 @@ let winner;
 let war;
 let cardsWon;
 
-/*----- cached element references -----*/
 const btn = document.querySelector('button');
-console.log(btn);
-
-
 const dealerWonEls = document.querySelector('#dealerWon');
 const playerWonEls = document.querySelector('#playerWon');
 
-/*----- event listeners -----*/
 btn.addEventListener('click', dealCards);
-
-document.querySelector('#playerStack')
-.addEventListener('click', compareCards);
-
-document.querySelector('#playerStack')
-.addEventListener('click', displayRandomCard);
+document.querySelector('#playerStack').addEventListener('click', compareCards);
+document.querySelector('#playerStack').addEventListener('click', displayRandomCard);
 
 
-/*----- functions -----*/
 function init(){
     cardsWon = {
         dealer: 0,
         player: 0,
     }
-    
     winner = null;
     war = null;
-
     playerHand = [];
     dealerHand = [];
-
     discardPlayer = [];
     discardDealer = [];
-
     render();
 }
 
@@ -64,7 +47,6 @@ function createNewDeck(){
         }
         return deck;
 }
-
 
 function shuffle(){
     for(let i = deck.length - 1; i > 0; i--) {
@@ -83,11 +65,9 @@ function splitDeck(){
             dealerHand.push(deck[i]);
         }
     }
-    console.log(playerHand, dealerHand, 'these are my hands')
 }
 
 function dealCards(){
-    console.log('Deal Cards');
     deck = createNewDeck();
     shuffle();
     splitDeck();
@@ -95,42 +75,32 @@ function dealCards(){
     btn.removeEventListener('click', dealCards); 
 }    
  
-function disableDealBtn(){
-    disableDealBtn();
-}
-
-
 function displayRandomCard(){
     playerCard = playerHand[0];
     dealerCard = dealerHand[0];
-    console.log(playerCard, dealerCard, "these are my cards")
     const dealerFaceCard = document.getElementById('dealerFaceCard');
     dealerFaceCard.innerHTML = `${dealerCard.value}${dealerCard.suit}`;
     const playerFaceCard = document.getElementById('playerFaceCard');
-    playerFaceCard.innerHTML = `${playerCard.value}${playerCard.suit}`; //copy this for check winner 
-    // playerCard.value = 'No more cards'
-    // dealerCard.value = 'No more cards'
-    // playerCard.suit = 'No more cards'
-    // dealerCard.suit = 'No more cards'
+    playerFaceCard.innerHTML = `${playerCard.value}${playerCard.suit}`;
 }
 
-
 function compareCards(){
-    console.log(playerCard, dealerCard, 'compare card function')
     if(playerCard.value > dealerCard.value) {
         playerWonEls.textContent = discardPlayer.length;
+        playerFaceCard.style.backgroundColor = 'white';
+        dealerFaceCard.style.backgroundColor = 'white';
         discardPlayer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
-        console.log('pc higher dc', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
     }else if(playerCard.value < dealerCard.value) {
         dealerWonEls.textContent = discardDealer.length;
+        playerFaceCard.style.backgroundColor = 'white';
+        dealerFaceCard.style.backgroundColor = 'white';
         discardDealer.push(playerCard);
         discardDealer.push(dealerCard);
         playerHand.shift();
         dealerHand.shift();
-        console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
         playerFaceCard = document.getElementById('playerFaceCard');
         playerFaceCard.style.backgroundColor = '#0e266a';
@@ -142,9 +112,7 @@ function compareCards(){
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
-        console.log('WAR', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
         for(let i = 0; i < 4; i++) {
-            console.log('war declared');
         }
     }
     if (playerHand.length === 0){
@@ -157,34 +125,28 @@ function compareCards(){
     }
     checkWinner();
 }
-console.log(dealerHand, playerHand)
 
 function declareWarWin(){
-    console.log(playerCard, dealerCard, 'compare war win')
     if(playerCard.value > dealerCard.value) {
         discardPlayer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
-        console.log('pc higher dc', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
     }else if(playerCard.value < dealerCard.value) {
         discardDealer.push(playerCard);
         discardDealer.push(dealerCard);
         playerHand.shift();
         dealerHand.shift();
-        console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
         discardDealer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
-        console.log('WAR', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
         for(let i = 0; i < 4; i++) {
             discardDealer.push(dealerCard[i]);
             discardPlayer.push(playerCard[i]);
             dealerHand.shift(i);
             playerHand.shift(i);
-            console.log('war declared');
         }
     }
 
@@ -192,18 +154,10 @@ function declareWarWin(){
 
 function checkWinner(){
     if(discardPlayer.length === 0 && playerHand.length === 0) {
-        // console.log(discardPlayer.length, discardDealer.length, 'winner?')
-        // dealerWonEls.textContent = `You lost the battle!`;
         document.querySelector('#dealerWon').textContent = 'Dealer Wins War!';
     }else if(discardDealer.length === 0 && dealerHand.length === 0) {
         document.querySelector('#playerWon').textContent = 'Player Wins War!';
-        // playerWonEls.textContent = `You won the battle!`;
-        // playerCard.textContent = 'Player Wins War!';
+
     } 
-    // declareWinner();
 }
 
-
-// function declareWinner(){
-//         .textContent = discardPlayer.length
-// }
