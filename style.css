@@ -20,11 +20,6 @@ h1 {
     font-family: fantasy;
 }
 
-h2 {
-    
-}
-
-
 #dealerStack, #playerStack {
     padding: 40px;
     display: flex;
@@ -39,8 +34,7 @@ h2 {
     background-image: radial-gradient(silver 12%, #0e266a 12%);
     background-position: 0 0;
     background-size: 30px 30px;
-    background-repeat: repeat;
-    
+    background-repeat: repeat;    
 }
 
 #dealerStack {
