@@ -11,31 +11,20 @@ let discardPlayer = []
 let discardDealer = []
 let playerCard;
 let dealerCard;
+let winner;
+let war;
+let cardsWon;
 
 /*----- cached element references -----*/
 const btn = document.querySelector('button');
 console.log(btn);
 
-const dealerDeckEls = {
-    dealer: document.querySelector('#dealerStack'),
-    player: document.querySelector('#playerStack')
-}
-const faceCardEls = {
-    dealer: document.querySelector('#dealerFaceCard'),   
-    player: document.querySelector('#playerFaceCard') 
-}
-const cardsWonEls = {
-    dealer: document.querySelector('#dealerWon'),
-    player: document.querySelector('#playerWon')
-}
-const splitDeckEls = {
-    dealer: document.querySelector('#dealerStack'),
-    player: document.querySelector('#playerStack')
-}
+
+const dealerWonEls = document.querySelector('#dealerWon');
+const playerWonEls = document.querySelector('#playerWon');
 
 /*----- event listeners -----*/
-btn.addEventListener('click', dealCards); 
-// btn.removeEventListener('click', dealCards);
+btn.addEventListener('click', dealCards);
 
 document.querySelector('#playerStack')
 .addEventListener('click', compareCards);
@@ -43,17 +32,10 @@ document.querySelector('#playerStack')
 document.querySelector('#playerStack')
 .addEventListener('click', displayRandomCard);
 
-// document.querySelector('#playerStack')
-// .addEventListener('click', gameOver);
 
 /*----- functions -----*/
 function init(){
     cardsWon = {
-        dealer: 0,
-        player: 0,
-    }
-    
-    faceCards = {
         dealer: 0,
         player: 0,
     }
@@ -96,9 +78,9 @@ function shuffle(){
 function splitDeck(){
     for(let i = 0; i < deck.length; i++) {
        if(i % 2 ===0){
-            playerHand.push(deck[i])
+            playerHand.push(deck[i]);
         } else {
-            dealerHand.push(deck[i])
+            dealerHand.push(deck[i]);
         }
     }
     console.log(playerHand, dealerHand, 'these are my hands')
@@ -110,6 +92,7 @@ function dealCards(){
     shuffle();
     splitDeck();
     displayRandomCard();
+    btn.removeEventListener('click', dealCards); 
 }    
  
 function disableDealBtn(){
@@ -118,13 +101,13 @@ function disableDealBtn(){
 
 
 function displayRandomCard(){
-    playerCard = playerHand[0]
-    dealerCard = dealerHand[0]
+    playerCard = playerHand[0];
+    dealerCard = dealerHand[0];
     console.log(playerCard, dealerCard, "these are my cards")
-    const dealerFaceCard = document.getElementById('dealerFaceCard')
-    dealerFaceCard.innerHTML = `${dealerCard?.value}${dealerCard?.suit}`
-    const playerFaceCard = document.getElementById('playerFaceCard')
-    playerFaceCard.innerHTML = `${playerCard?.value}${playerCard?.suit}` //copy this for check winner 
+    const dealerFaceCard = document.getElementById('dealerFaceCard');
+    dealerFaceCard.innerHTML = `${dealerCard?.value}${dealerCard?.suit}`;
+    const playerFaceCard = document.getElementById('playerFaceCard');
+    playerFaceCard.innerHTML = `${playerCard?.value}${playerCard?.suit}`; //copy this for check winner 
     // playerCard.value = 'No more cards'
     // dealerCard.value = 'No more cards'
     // playerCard.suit = 'No more cards'
@@ -148,8 +131,7 @@ function compareCards(){
         console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
         war = 'WAR';
-        // select element on html where I'm going to leave a message for user letting them know that war is happeneing and update text content
-        // then, 
+        let y = document.createTextNode('WAR IS DECLARED!');
         discardDealer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
@@ -160,14 +142,12 @@ function compareCards(){
         }
     }
     if (playerHand.length === 0){
-        playerHand = discardPlayer
-        discardPlayer = []
-        console.log(playerHand, discardPlayer, 'Empty Player Cards')
+        playerHand = discardPlayer;
+        discardPlayer = [];
     }
     if (dealerHand.length === 0){
-        dealerHand = discardDealer
-        discardDealer = []
-        console.log(dealerHand, discardPlayer, 'Empty Player Cards')
+        dealerHand = discardDealer;
+        discardDealer = [];
     }
     checkWinner();
 }
@@ -188,8 +168,8 @@ function declareWarWin(){
         dealerHand.shift();
         console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
-        war = 'WAR';
-        playerFaceCard.textContent = 'WAR is DECLARED!';
+        let war = 'WAR';
+        dealerWonEls.textContent = 'WAR is DECLARED!';
         // select element on html where I'm going to leave a message for user letting them know that war is happeneing and update text content
         // then, 
         discardDealer.push(dealerCard);
@@ -206,26 +186,18 @@ function declareWarWin(){
 
 function checkWinner(){
     if(discardPlayer.length === 0 && playerHand.length === 0) {
-        console.log(discardPlayer.length, discardDealer.length, 'winner?')
-        dealer = `You lost the battle!`
-        document.querySelector('#dealerWon').innerHTML = 'Dealer Wins War!';
+        // console.log(discardPlayer.length, discardDealer.length, 'winner?')
+        // dealerWonEls.textContent = `You lost the battle!`;
+        document.querySelector('#dealerWon').textContent = 'Dealer Wins War!';
     }else if(discardDealer.length === 0 && dealerHand.length === 0) {
-        player = `You won the battle!`
+        document.querySelector('#playerWon').textContent = 'Player Wins War!';
+        // playerWonEls.textContent = `You won the battle!`;
         // playerCard.textContent = 'Player Wins War!';
-    }
+    } 
+    // declareWinner();
 }
-function checkEmptyHand(){
-    // run this function if player hand = 0, then redefine playerHand = playerDiscard
-    // then, change the discardplayer = []
-    // if both playerhand && discardPlayer are [], playerHand === [] && discardPlayer === [], then they lost
-    // same thing for the dealer
-    // or keep track of a variable allPlayerCards = playerHand.length + playerdiscard.length, player wins 
-}
-// // function render(){   
-//     // Cards won score changes as winner collects winning cards
-//     for(let cardWon in cardsWon){
-//         console.log(cardWon, '< key name');
-//     cardsWonEls[cardWon].textContent = cardsWon[cardWon];
-//     }
-//     // render();
-// // }
+
+
+// function declareWinner(){
+//         .textContent = discardPlayer.length
+// }
