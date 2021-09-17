@@ -105,9 +105,9 @@ function displayRandomCard(){
     dealerCard = dealerHand[0];
     console.log(playerCard, dealerCard, "these are my cards")
     const dealerFaceCard = document.getElementById('dealerFaceCard');
-    dealerFaceCard.innerHTML = `${dealerCard?.value}${dealerCard?.suit}`;
+    dealerFaceCard.innerHTML = `${dealerCard.value}${dealerCard.suit}`;
     const playerFaceCard = document.getElementById('playerFaceCard');
-    playerFaceCard.innerHTML = `${playerCard?.value}${playerCard?.suit}`; //copy this for check winner 
+    playerFaceCard.innerHTML = `${playerCard.value}${playerCard.suit}`; //copy this for check winner 
     // playerCard.value = 'No more cards'
     // dealerCard.value = 'No more cards'
     // playerCard.suit = 'No more cards'
@@ -118,20 +118,26 @@ function displayRandomCard(){
 function compareCards(){
     console.log(playerCard, dealerCard, 'compare card function')
     if(playerCard.value > dealerCard.value) {
+        playerWonEls.textContent = discardPlayer.length;
         discardPlayer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
         console.log('pc higher dc', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
     }else if(playerCard.value < dealerCard.value) {
+        dealerWonEls.textContent = discardDealer.length;
         discardDealer.push(playerCard);
         discardDealer.push(dealerCard);
         playerHand.shift();
         dealerHand.shift();
         console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
-        war = 'WAR';
-        let y = document.createTextNode('WAR IS DECLARED!');
+        playerFaceCard = document.getElementById('playerFaceCard');
+        playerFaceCard.style.backgroundColor = '#0e266a';
+        dealerFaceCard = document.getElementById('dealerFaceCard');
+        dealerFaceCard.style.backgroundColor = '#6a110e';
+        playerWonEls.textContent = 'WAR';
+        dealerWonEls.textContent = 'WAR';
         discardDealer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
@@ -168,16 +174,16 @@ function declareWarWin(){
         dealerHand.shift();
         console.log('pc lower dc', playerHand.length, dealerHand.length,discardDealer.length, discardPlayer.length)
     }else if(playerCard.value === dealerCard.value) {
-        let war = 'WAR';
-        dealerWonEls.textContent = 'WAR is DECLARED!';
-        // select element on html where I'm going to leave a message for user letting them know that war is happeneing and update text content
-        // then, 
         discardDealer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
         playerHand.shift();
         console.log('WAR', dealerHand.length, playerHand.length, discardDealer.length, discardPlayer.length)
         for(let i = 0; i < 4; i++) {
+            discardDealer.push(dealerCard[i]);
+            discardPlayer.push(playerCard[i]);
+            dealerHand.shift(i);
+            playerHand.shift(i);
             console.log('war declared');
         }
     }
