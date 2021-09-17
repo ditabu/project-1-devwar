@@ -20,3 +20,4 @@ Take a chance at battle against the Dealer in this simple renaissance themed car
 I plan to improve the look and feel of the game, as well as the functionality. Right now, the game is very simple. In the future, there will be animations to the game such as having the card flip over to reveal its value, options for choosing card colors, battle names and some css styling to it.
 
 ![alt text](devwargame.jpg)
+![alt text](devatwar.jpg)
