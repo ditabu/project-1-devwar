@@ -59,7 +59,7 @@ function shuffle(){
 
 function splitDeck(){
     for(let i = 0; i < deck.length; i++) {
-       if(i % 2 ===0){
+       if(i % 2 === 0){
             playerHand.push(deck[i]);
         } else {
             dealerHand.push(deck[i]);
@@ -102,12 +102,12 @@ function compareCards(){
         playerHand.shift();
         dealerHand.shift();
     }else if(playerCard.value === dealerCard.value) {
+        playerWonEls.textContent = 'WAR';
+        dealerWonEls.textContent = 'WAR';
         playerFaceCard = document.getElementById('playerFaceCard');
         playerFaceCard.style.backgroundColor = '#0e266a';
         dealerFaceCard = document.getElementById('dealerFaceCard');
         dealerFaceCard.style.backgroundColor = '#6a110e';
-        playerWonEls.textContent = 'WAR';
-        dealerWonEls.textContent = 'WAR';
         discardDealer.push(dealerCard);
         discardPlayer.push(playerCard);
         dealerHand.shift();
@@ -123,41 +123,21 @@ function compareCards(){
         dealerHand = discardDealer;
         discardDealer = [];
     }
-    checkWinner();
+    declareWinner();
 }
 
-function declareWarWin(){
-    if(playerCard.value > dealerCard.value) {
-        discardPlayer.push(dealerCard);
-        discardPlayer.push(playerCard);
-        dealerHand.shift();
-        playerHand.shift();
-    }else if(playerCard.value < dealerCard.value) {
-        discardDealer.push(playerCard);
-        discardDealer.push(dealerCard);
-        playerHand.shift();
-        dealerHand.shift();
-    }else if(playerCard.value === dealerCard.value) {
-        discardDealer.push(dealerCard);
-        discardPlayer.push(playerCard);
-        dealerHand.shift();
-        playerHand.shift();
-        for(let i = 0; i < 4; i++) {
-            discardDealer.push(dealerCard[i]);
-            discardPlayer.push(playerCard[i]);
-            dealerHand.shift(i);
-            playerHand.shift(i);
-        }
+function declareWinner(){
+    if(discardPlayer.length === 26) {
+        dealerWonEls.textContent = 'WINNER!';
+        dealerWonEls.style.fontSize = 'x-large';
+        playerWonEls.textContent = 'SURRENDER!';
+        playerWonEls.style.fontSize = 'x-large';
+        document.querySelector('#playerStack').removeEventListener('click', displayRandomCard);
+    }else if(discardDealer.length === 26) {
+        playerWonEls.textContent = 'WINNER!';
+        playerWonEls.style.fontSize = 'x-large';
+        dealerWonEls.textContent = 'SURRENDER!';
+        dealerWonEls.style.fontSize = 'x-large';
+        document.querySelector('#playerStack').removeEventListener('click', displayRandomCard);
     }
-
-}
-
-function checkWinner(){
-    if(discardPlayer.length === 0 && playerHand.length === 0) {
-        document.querySelector('#dealerWon').textContent = 'Dealer Wins War!';
-    }else if(discardDealer.length === 0 && dealerHand.length === 0) {
-        document.querySelector('#playerWon').textContent = 'Player Wins War!';
-
-    } 
-}
-
+}    
